@@ -19,7 +19,7 @@ const data = {
   dataSets: [
     {
       values: [
-        { y: 32.4 },
+        { y: 35.4 },
         { y: 30.5 },
         { y: 30.8 },
         { y: 28.2 },
@@ -29,18 +29,18 @@ const data = {
         { y: 29.9 },
         { y: 30.1 },
         { y: 26.2 },
-        { y: 25.3 },
-        { y: 25.0 },
+        { y: 17.3 },
       ],
       label: '',
       config: {
-        lineWidth: 2,
+        lineWidth: 1.5,
         drawCircles: false,
+        drawCubic: false,
         highlightColor: processColor('red'),
         color: processColor('rgb(255, 150, 150)'),
         // drawFilled: true,
         fillColor: processColor('red'),
-        fillAlpha: 30,
+        fillAlpha: 255,
         valueTextSize: 0,
         valueFormatter: "##.0",
         dashedLine: {
@@ -49,31 +49,6 @@ const data = {
         },
       }
     },
-    // {
-    //   values: [{y: 90}, {y: 130}, {y: 100}, {y: 105}],
-    //   label: 'Company Y',
-    //   config: {
-    //     lineWidth: 1,
-    //     drawCubicIntensity: 0.4,
-    //     circleRadius: 5,
-    //     drawHighlightIndicators: false,
-    //     color: processColor('blue'),
-    //     drawFilled: true,
-    //     fillColor: processColor('blue'),
-    //     fillAlpha: 45,
-    //     circleColor: processColor('blue')
-    //   }
-    // },
-    // {
-    //   values: [{y: 110}, {y: 105}, {y: 115}, {y: 110}],
-    //   label: 'Company Dashed',
-    //   config: {
-    //     color: processColor('green'),
-    //     drawFilled: true,
-    //     fillColor: processColor('green'),
-    //     fillAlpha: 50
-    //   }
-    // },
   ],
 }
 
@@ -103,8 +78,102 @@ const marker = {
 }
 
 const xAxis = {
-  valueFormatter: ['', '', '', '', '', '', '', '', ''],
-  // axisLineColor: processColor('teal')
+  /* what is drawn */
+  enabled: true,
+  drawLabels: true,
+  drawAxisLine: true,
+  drawGridLines: true,
+
+  /* style */
+  textColor: processColor('rgb(150, 150, 150)'),
+  textSize: 8,
+  // fontFamily: string,
+  // fontStyle: number,
+  gridColor: processColor('rgb(200, 200, 200)'),    // 縦線(グリッド)のカラー
+  gridLineWidth: 1,   // 横線(グリッド)の太さ
+  axisLineColor: processColor('rgb(200, 200, 200)'),   // X軸のカラー
+  axisLineWidth: 1,  // X軸の太さ
+  gridDashedLine: {   // 横線(グリッド)の点線設定
+    lineLength: 4,
+    spaceLength: 1,
+  },
+  // limit lines  (境界線を入れる場合に利用)
+  // limitLines: [
+  //   {
+  //     limit: 1,
+  //     label: 'limit1',
+  //     lineColor: processColor('red'),
+  //     lineWidth: 1,
+  //   }
+  // ],
+  // drawLimitLinesBehindData: true,
+
+  // axisMinimum: 1,
+  // axisMaximum: 40,
+  granularity: 1, // 粒度
+  granularityEnabled: true,
+
+  labelCount: 10,   // ラベル数(グリッド縦線の数)
+  labelCountForce: false,
+
+  centerAxisLabels: false,  // ラベルを点の位置でなく間に表示する
+
+  // valueFormatter: 'largeValue',
+  valueFormatter: ['4/20', '・', '・', '・', '・', '4/25', '・', '・', '・', '・', 'Today'],
+
+  /* xAxis固有 */
+  labelRotationAngle: 0,  // ラベルの回転角度
+  avoidFirstLastClipping: false,   // 最初と最後のラベルがはみ出さないように内側に寄せる
+  position: 'BOTTOM',
+}
+
+const yAxis = {
+  left: {
+    // what is drawn
+    enabled: true,
+    drawLabels: true,
+    drawAxisLine: true,
+    drawGridLines: true,
+
+    /* style */
+    textColor: processColor('rgb(150, 150, 150)'),
+    textSize: 8,
+    // fontFamily: string,
+    // fontStyle: number,
+    gridColor: processColor('rgb(200, 200, 200)'),    // 縦線(グリッド)のカラー
+    gridLineWidth: 1,   // 横線(グリッド)の太さ
+    axisLineColor: processColor('rgb(200, 200, 200)'),   // X軸のカラー
+    axisLineWidth: 1,  // X軸の太さ
+    gridDashedLine: {   // 横線(グリッド)の点線設定
+      lineLength: 4,
+      spaceLength: 1,
+    },
+    // limit lines  (境界線を入れる場合に利用)
+    // limitLines: [
+    //   {
+    //     limit: 10,
+    //     label: 'limit1',
+    //     lineColor: processColor('red'),
+    //     lineWidth: 30,
+    //   }
+    // ],
+    // drawLimitLinesBehindData: true,
+
+    axisMinimum: 0,
+    axisMaximum: 50,
+    granularity: 1, // 粒度
+    granularityEnabled: true,
+
+    labelCount: 6,   // ラベル数(グリッド縦線の数)
+    labelCountForce: false,
+
+    centerAxisLabels: false,  // ラベルを点の位置でなく間に表示する
+    // valueFormatter: ['0', '', '', '', '', '', '', '', '8', '', '', '', '', '', '14', '', '', '', '', '', '', '', '', '', '24', '', '', '', '', '', '', '', '', '', '34', '35', '', '', '', '', '', '' ],
+    // valueFormatter: [0, 8, 14, 24, 35],
+  },
+  right: {
+    enabled: false,
+  },
 }
 
 const LineChartExample = () => {
@@ -118,11 +187,12 @@ const LineChartExample = () => {
           legend={legend}
           marker={marker}
           xAxis={xAxis}
+          yAxis={yAxis}
           // drawBorders={true}
-          drawGridBackground={true}
+          drawGridBackground={false}
           gridLineWidth={0.5}
           gridBackgroundColor={processColor('rgb(250, 250, 255)')}
-          borderColor={processColor('rgb(180, 180, 180)')}
+          borderColor={processColor('rgb(200, 200, 200)')}
           chartBackgroundColor={processColor('white')}
           borderWidth={1}
           drawBorders={true}
